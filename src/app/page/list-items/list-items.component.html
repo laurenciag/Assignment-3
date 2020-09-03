@@ -1,0 +1,131 @@
+<!-- <div>
+  <label>Nama Barang : 
+  </label>
+</div>
+<input [(ngModel)]="name">
+
+<div>
+  <label>Jenis Barang : 
+  </label>
+</div>
+<input [(ngModel)]="typeItem">
+
+<div>
+  <label>Expired Date : 
+  </label>
+</div>
+<input [(ngModel)]="expiredDate">
+<br/>
+  <button type="button" (click)="saveItem()">Add Items</button> -->
+
+<div class="container mt-2">
+  <button type="button" class="btn btn-primary" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"
+    (click)="openAdd(addItems)">Add Item</button>
+</div>
+
+<ng-template #addItems let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editProfileLabel">Add Barang</h5>
+    <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="name">Item Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Input Name" [(ngModel)]="addItem.name"
+          name="name">
+          
+      <div class="form-group">
+        <label for="typeItem">Item type</label>
+        <!-- <input type="text" class="form-control" id="typeItem" placeholder="Input Item Type"
+          [(ngModel)]="addItem.typeItem" name="typeItem"> -->
+          <select class="browser-default custom-select" [(ngModel)]="addItem.typeItem" name="typeItem">
+            <!-- <option selected>Item Type</option> -->
+            <option>Dapur</option>
+            <option>Elektronik</option>
+            <option>Buku</option>
+            <option>Komputer</option>
+            <option>Fashion</option>
+          </select>
+      </div>
+      </div>
+      <div class="form-group">
+        <label for="expiredDate">Expired Date</label>
+        <input class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" [(ngModel)]="datePick">
+        <!-- <input type="date" class="form-control" id="expiredDate" placeholder="Input Expired Date" [(ngModel)]="datePick"
+          name="expiredDate"> -->
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="saveItem()">Add Item</button>
+    </form>
+  </div>
+</ng-template>
+
+
+<div class="container p-3">
+  <table class="table table-bordered center mt-2"
+    style="border-color: black; font-family: Verdana, Geneva, Tahoma, sans-serif; ">
+    <thead style="background-color: darkcyan; text-align: center;">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nama Barang</th>
+        <th scope="col">Tipe Barang</th>
+        <th scope="col">Expired Date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <!-- <th scope="row">{{item.uuid}}</th> -->
+        <td>{{item.uuid}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.typeItem}}</td>
+        <td>{{item.expiredDate * 1000 | date:'dd MMMM yyyy'}}</td>
+        <td style="center">
+          <button type="button" class="btn btn-success" (click)="openEdit(itemEdit, item)">Edit</button>
+          <button type="button" class="btn btn-danger ml-2" (click)="deleteItems(item.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<ng-template #itemEdit let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editProfileLabel">Edit Barang</h5>
+    <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="name">Item Name</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="editItems.name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="typeItem">Item type</label>
+        <!-- <input type="text" class="form-control" id="typeItem" [(ngModel)]="editItems.typeItem" name="typeItem"> -->
+        <select class="browser-default custom-select" [(ngModel)]="editItems.typeItem" name="typeItem">
+          <!-- <option selected>Item Type</option> -->
+          <option>Dapur</option>
+          <option>Elektronik</option>
+          <option>Buku</option>
+          <option>Komputer</option>
+          <option>Fashion</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="expiredDate">Expired Date</label>
+        <input class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" [(ngModel)]="datePick">
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="editItem()">Save Edit</button>
+    </form>
+  </div>
+</ng-template>
